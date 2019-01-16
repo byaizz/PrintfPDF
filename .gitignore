@@ -1,2 +1,4 @@
 /*.suo
 /*.ncb
+/PrintPDF/Debug
+/PrintPDF/*.user
