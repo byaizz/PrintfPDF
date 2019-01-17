@@ -3,15 +3,20 @@
 
 #include "serviceBase.h"
 
-void custom_service();
+extern bool g_exitFlag;
+unsigned int _stdcall service_thread_func(void *exitFlag);
+unsigned int _stdcall receive_func(void *exitFlag);
 
 class BasicMain : public ServiceBase{
 public:
 	BasicMain(const char* serviceName, const char* displayName);
 	~BasicMain();
 
-	static void service_thread_func();
+protected:
 	void OnStart(DWORD argc, TCHAR* argv[]);
+	void OnStop();
+private:
+	HANDLE m_threadHandle;
 };
 
 #endif	//BASICMAIN_H

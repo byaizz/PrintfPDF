@@ -9,8 +9,10 @@ using std::endl;
 
 void ShowHelp()
 {
-	cout << "-i	to install the service.\n"
-		"-u	to uninstall the service.\n" << endl;
+	cout<<"-i	to install the service.\n"
+		"-u	to uninstall the service."<<endl;
+	cout<<"press enter to continnue."<<endl;
+	getchar();
 	exit(0);
 }
 int main(int argc, char *argv[])
@@ -44,7 +46,7 @@ int main(int argc, char *argv[])
 		case 'd':
 		case 'D':
 			printf("deBug run.\n");
-			BasicMain::service_thread_func();
+			service_thread_func((void*)(&g_exitFlag));
 			break;
 		case 's':
 		case 'S':
