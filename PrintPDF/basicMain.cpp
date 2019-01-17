@@ -1,43 +1,22 @@
-#include "basicMain.h"
-#include <windows.h>
 #include <iostream>
 #include <process.h>
+#include "PDFCreater.h"
+#include "basicMain.h"
+#include "NG_sock.h"
 
 bool g_exitFlag = true;
 
 unsigned int _stdcall service_thread_func(void *exitFlag)
 {
-	HANDLE hThread;
-
-	printf("Creating second thread...\n");
-
-	// Create thread.
-	hThread = (HANDLE)_beginthreadex(NULL, 0, receive_func, exitFlag, 0, NULL);
-
-
+	NGSock_SysInit();
+	PDFCreater creater;
+	creater.Init();
 	while (*(bool*)exitFlag)
 	{
-		printf("I'm in service_thread_func.\n");
-		Sleep(1000);
+		creater.Run();
+		Sleep(100);
 	}
 
-	printf("waiting for receive_func finished.\n");
-	WaitForSingleObject(hThread, INFINITE);
-	// Destroy the thread object.
-	CloseHandle(hThread);
-	return 0;
-}
-
-unsigned int _stdcall receive_func(void *exitFlag)
-{
-	while(*(bool*)exitFlag)
-	{
-		printf("I'm in receive_func.\n");
-		Sleep(1000);
-	}
-	printf("receive_func will be finished\n");
-	Sleep(1000);;
-	printf("receive_func is finished\n");
 	return 0;
 }
 
@@ -59,6 +38,7 @@ void BasicMain::OnStart(DWORD argc, TCHAR * argv[])
 
 void BasicMain::OnStop()
 {
+	NGSock_SysClose();
 	g_exitFlag = false;
 	WaitForSingleObject(m_threadHandle, INFINITE);
 	CloseHandle(m_threadHandle);

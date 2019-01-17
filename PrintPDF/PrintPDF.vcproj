@@ -37,6 +37,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories=".\excel;D:\RollWare\RwPlatform\Include;D:\RollWare\RwKernel\SDK\Include"
+				RuntimeLibrary="1"
+				UsePrecompiledHeader="0"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -50,6 +53,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="RWPlatform_d.lib RWKernel_d.lib des.lib netapi32.lib pthreadvc2.lib wsock32.lib nafxcwd.lib DataEncrypt_d.lib"
+				AdditionalLibraryDirectories="D:\RollWare\ExternLib"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -155,6 +160,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PDFCreater.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PRASGuiSerComm.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\serviceBase.cpp"
 				>
 			</File>
@@ -169,6 +182,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\PDFCreater.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PRASGuiSerComm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RollDataDefinition.h"
+				>
+			</File>
+			<File
 				RelativePath=".\serviceBase.h"
 				>
 			</File>
@@ -178,6 +203,50 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+		</Filter>
+		<Filter
+			Name="Excel"
+			>
+			<File
+				RelativePath=".\excel\CApplication.h"
+				>
+			</File>
+			<File
+				RelativePath=".\excel\CFont0.h"
+				>
+			</File>
+			<File
+				RelativePath=".\excel\CPageSetup.h"
+				>
+			</File>
+			<File
+				RelativePath=".\excel\CRange.h"
+				>
+			</File>
+			<File
+				RelativePath=".\excel\CWorkbook.h"
+				>
+			</File>
+			<File
+				RelativePath=".\excel\CWorkbooks.h"
+				>
+			</File>
+			<File
+				RelativePath=".\excel\CWorksheet.h"
+				>
+			</File>
+			<File
+				RelativePath=".\excel\CWorksheets.h"
+				>
+			</File>
+			<File
+				RelativePath=".\excel\ExcelManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\excel\ExcelManager.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

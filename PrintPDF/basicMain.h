@@ -5,7 +5,6 @@
 
 extern bool g_exitFlag;
 unsigned int _stdcall service_thread_func(void *exitFlag);
-unsigned int _stdcall receive_func(void *exitFlag);
 
 class BasicMain : public ServiceBase{
 public:
