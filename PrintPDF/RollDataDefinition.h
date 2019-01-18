@@ -5,6 +5,7 @@ struct ROLLDATA{
 	int i;
 	int j;
 	int k;
+	char text[1024];
 };
 
 #endif

@@ -14,7 +14,7 @@ unsigned int _stdcall service_thread_func(void *exitFlag)
 	while (*(bool*)exitFlag)
 	{
 		creater.Run();
-		Sleep(100);
+		Sleep(1000);
 	}
 
 	return 0;
@@ -38,8 +38,8 @@ void BasicMain::OnStart(DWORD argc, TCHAR * argv[])
 
 void BasicMain::OnStop()
 {
-	NGSock_SysClose();
 	g_exitFlag = false;
 	WaitForSingleObject(m_threadHandle, INFINITE);
 	CloseHandle(m_threadHandle);
+	NGSock_SysClose();
 }

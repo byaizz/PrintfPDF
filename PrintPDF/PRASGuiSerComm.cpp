@@ -38,7 +38,6 @@ bool CPRASGuiSerComm::InitComm()
 		return false;
 	}
 	strcat(path,GUI_SERVICE_COMM_CFG);
-	std::cout<<path<<std::endl;
 
 	//创建通信连接
 	m_hComm = MP_Comm_Create(path);
@@ -47,9 +46,8 @@ bool CPRASGuiSerComm::InitComm()
 		return false;
 	}
 	
-
 	m_iCount = MP_Comm_GetTunnelCount(m_hComm);
-	std::cout<<m_iCount<<std::endl;
+
 	return true;
 }
 
@@ -104,22 +102,7 @@ void CPRASGuiSerComm::RecvDataSpec(int iCount)
 			memcpy(&m_newRollData, m_pBuff, sizeof(m_newRollData));
 			printf("接收到轧钢信息!\n");
 		}
-		printf("---%d---\n",iSize);
 	}
-}
-
-void CPRASGuiSerComm::CommHeadInit(COMM_DATA_HEAD& head, int iID, int iSize)
-{
-	head.sTelID = iID;
-	head.sTelHeaderLength = sizeof(COMM_DATA_HEAD);
-	head.sTelDataLength = iSize;
-	head.sTelHeaderLength = 0;//等待修改
-}
-
-void CPRASGuiSerComm::SendHeart()
-{
-	int i = 0;
-	SendData(&i, sizeof(int));
 }
 
 int CPRASGuiSerComm::SendData(void *pData, int iSize)

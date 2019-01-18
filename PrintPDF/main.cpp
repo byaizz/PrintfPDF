@@ -4,8 +4,8 @@
 using std::cout;
 using std::endl;
 
-#define SERVICE_NAME				"serviceTest"				//internal name of service
-#define SERVICE_DISPLAY_NAME		"serviceTest_by"			//displayed name of service
+#define SERVICE_NAME				"RollWare"				//internal name of service
+#define SERVICE_DISPLAY_NAME		"RollWarePDF"			//displayed name of service
 
 void ShowHelp()
 {

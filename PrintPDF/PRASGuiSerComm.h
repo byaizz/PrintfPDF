@@ -39,9 +39,7 @@ public:
 	int CloseComm();//关闭通信
 	int GetCommState();//获取通信状态
 	void RecvData();//循环接受数据
-	void SendHeart();//发送心跳信息
 
 	int SendData(void *pData, int iSize);//发送数据
 	void RecvDataSpec(int iCount);//接受指定通道数据
-	void CommHeadInit(COMM_DATA_HEAD &head, int iID, int iSize);
 };
