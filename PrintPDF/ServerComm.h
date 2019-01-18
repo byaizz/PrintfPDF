@@ -15,12 +15,12 @@ struct COMM_DATA_HEAD{
 	short sHeaderSum;//电文头部字节校验和
 };
 
-class CPRASGuiSerComm
+class ServerComm
 {
 public:
-	CPRASGuiSerComm(void);
+	ServerComm(void);
 public:
-	~CPRASGuiSerComm(void);
+	~ServerComm(void);
 private:
 	enum DataLength{
 		BUFF_MAX = 5000		//缓存最大长度
@@ -29,8 +29,8 @@ private:
 	HANDLE m_hComm;//通信句柄
 	int m_iCount;//通道数
 public:
-	bool m_isNewRollData;
-	ROLLDATA m_newRollData;
+	bool m_isNewRollData;//是否是新轧制信息
+	ROLLDATA m_newRollData;//轧制信息
 	void *m_pBuff;//缓存区
 
 public:

@@ -4,16 +4,18 @@
 #include "basicMain.h"
 #include "NG_sock.h"
 
-bool g_exitFlag = true;
+bool g_exitFlag = true;//退出标记，false为退出
 
 unsigned int _stdcall service_thread_func(void *exitFlag)
 {
+	//init
 	NGSock_SysInit();
+
 	PDFCreater creater;
-	creater.Init();
+	creater.Init();//init
 	while (*(bool*)exitFlag)
 	{
-		creater.Run();
+		creater.Run();//run,任务执行函数
 		Sleep(1000);
 	}
 
@@ -38,8 +40,8 @@ void BasicMain::OnStart(DWORD argc, TCHAR * argv[])
 
 void BasicMain::OnStop()
 {
-	g_exitFlag = false;
-	WaitForSingleObject(m_threadHandle, INFINITE);
-	CloseHandle(m_threadHandle);
-	NGSock_SysClose();
+	g_exitFlag = false;//退出标记
+	WaitForSingleObject(m_threadHandle, INFINITE);//等待线程结束
+	CloseHandle(m_threadHandle);//关闭线程句柄
+	NGSock_SysClose();//close
 }

@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	if (argc < 1) return 0;
 	if (argc > 2)
 	{
-		ShowHelp();
+		ShowHelp();//显示帮助
 	}
 
 	BasicMain service(SERVICE_NAME, SERVICE_DISPLAY_NAME);
@@ -36,22 +36,22 @@ int main(int argc, char *argv[])
 		case 'i':
 		case 'I':
 			printf("install.\n");
-			service.InstallService();
+			service.InstallService();//安装服务
 			break;
 		case 'u':
 		case 'U':
 			printf("uninstall.\n");
-			service.UninstallService();
+			service.UninstallService();//卸载服务
 			break;
 		case 'd':
 		case 'D':
 			printf("deBug run.\n");
-			service_thread_func((void*)(&g_exitFlag));
+			service_thread_func((void*)(&g_exitFlag));//调试
 			break;
 		case 's':
 		case 'S':
 			printf("start service.\n");
-			service.StartInstalledService();
+			service.StartInstalledService();//执行已安装的服务
 			break;
 		default:
 			ShowHelp();

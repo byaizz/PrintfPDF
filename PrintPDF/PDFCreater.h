@@ -1,5 +1,5 @@
 #pragma once
-#include "PRASGuiSerComm.h"
+#include "ServerComm.h"
 #include "ExcelManager.h" 
 
 class PDFCreater
@@ -7,9 +7,9 @@ class PDFCreater
 public:
 	PDFCreater(void);
 	~PDFCreater(void);
-	void Init();
-	void Run();
+	void Init();//≥ı ºªØ
+	void Run();//run
 private:
 	ExcelManager m_excel;
-	CPRASGuiSerComm m_comm;
+	ServerComm m_comm;
 };

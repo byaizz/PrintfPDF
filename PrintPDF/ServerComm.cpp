@@ -1,14 +1,14 @@
-#include "PRASGuiSerComm.h"
+#include "ServerComm.h"
 #include "NG_Path.h"
 #include "MP_Comm.h"
 #include "NG_sock.h"
 #include <fstream>
 #include <iostream>
 
-#define GUI_SERVICE_COMM_CFG	"PRASGUIServiceComm.cfg"
+#define GUI_SERVICE_COMM_CFG	"ServerComm.cfg"
 #define BUFF_MAX	5000
 
-CPRASGuiSerComm::CPRASGuiSerComm(void)
+ServerComm::ServerComm(void)
 :m_hComm(NULL)
 ,m_iCount(0)
 ,m_isNewRollData(false)
@@ -17,7 +17,7 @@ CPRASGuiSerComm::CPRASGuiSerComm(void)
 	memset(&m_newRollData,0,sizeof(m_newRollData));
 }
 
-CPRASGuiSerComm::~CPRASGuiSerComm(void)
+ServerComm::~ServerComm(void)
 {
 	CloseComm();
 	if (NULL != m_pBuff)
@@ -26,7 +26,7 @@ CPRASGuiSerComm::~CPRASGuiSerComm(void)
 	}
 }
 
-bool CPRASGuiSerComm::InitComm()
+bool ServerComm::InitComm()
 {
 	int ret = 0;
 	char path[512] = {0};
@@ -51,7 +51,7 @@ bool CPRASGuiSerComm::InitComm()
 	return true;
 }
 
-int CPRASGuiSerComm::CloseComm()
+int ServerComm::CloseComm()
 {
 	if (m_hComm != NULL)
 	{
@@ -61,7 +61,7 @@ int CPRASGuiSerComm::CloseComm()
 	return ERR_SUCCESS;
 }
 
-int CPRASGuiSerComm::GetCommState()
+int ServerComm::GetCommState()
 {
 	if (m_hComm == NULL)
 	{
@@ -78,7 +78,7 @@ int CPRASGuiSerComm::GetCommState()
 	return ERR_SUCCESS;
 }
 
-void CPRASGuiSerComm::RecvData()
+void ServerComm::RecvData()
 {
 	for (int i = 0; i < m_iCount; ++i)
 	{
@@ -86,7 +86,7 @@ void CPRASGuiSerComm::RecvData()
 	}
 }
 
-void CPRASGuiSerComm::RecvDataSpec(int iCount)
+void ServerComm::RecvDataSpec(int iCount)
 {
 	if (!IsCommInit())
 	{
@@ -105,7 +105,7 @@ void CPRASGuiSerComm::RecvDataSpec(int iCount)
 	}
 }
 
-int CPRASGuiSerComm::SendData(void *pData, int iSize)
+int ServerComm::SendData(void *pData, int iSize)
 {
 	if(pData == NULL)
 	{
@@ -131,7 +131,7 @@ int CPRASGuiSerComm::SendData(void *pData, int iSize)
 	return res;
 }
 
-bool CPRASGuiSerComm::IsCommInit()
+bool ServerComm::IsCommInit()
 {
 	return (m_hComm != NULL);
 }
