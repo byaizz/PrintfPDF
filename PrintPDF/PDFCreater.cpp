@@ -35,5 +35,6 @@ void PDFCreater::Run()
 // 			m_comm.m_isNewRollData = false;
 // 		}
 // 		m_excel.Close();
+		m_comm.m_isNewRollData == false;
  	}
 }

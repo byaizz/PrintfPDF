@@ -23,7 +23,7 @@ public:
 	~ServerComm(void);
 private:
 	enum DataLength{
-		BUFF_MAX = 5000		//缓存最大长度
+		BUFF_MAX = 15000		//缓存最大长度
 	};
 private:
 	HANDLE m_hComm;//通信句柄
