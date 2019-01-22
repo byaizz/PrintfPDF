@@ -11,6 +11,12 @@ unsigned int _stdcall service_thread_func(void *exitFlag)
 	//init
 	NGSock_SysInit();
 
+	if (S_OK != CoInitialize(NULL))//init
+	{
+		printf("初始化ole失败\n");
+		return -1;
+	}
+
 	PDFCreater creater;
 	creater.Init();//init
 	while (*(bool*)exitFlag)
@@ -19,6 +25,8 @@ unsigned int _stdcall service_thread_func(void *exitFlag)
 		Sleep(1000);
 	}
 
+	CoUninitialize();//uninitialize
+	NGSock_SysClose();//close
 	return 0;
 }
 
@@ -43,5 +51,4 @@ void BasicMain::OnStop()
 	g_exitFlag = false;//退出标记
 	WaitForSingleObject(m_threadHandle, INFINITE);//等待线程结束
 	CloseHandle(m_threadHandle);//关闭线程句柄
-	NGSock_SysClose();//close
 }
