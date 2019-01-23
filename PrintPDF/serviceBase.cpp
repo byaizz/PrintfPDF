@@ -107,7 +107,7 @@ bool ServiceBase::UninstallService()
 		return false;
 	}
 
-	SC_HANDLE hService = ::OpenService(hSCM, TEXT(m_serviceName), SERVICE_STOP | DELETE);
+	SC_HANDLE hService = ::OpenService(hSCM, TEXT(m_serviceName), SERVICE_STOP | SERVICE_QUERY_STATUS | DELETE);
 	if (hService == NULL)
 	{
 		::CloseServiceHandle(hSCM);
@@ -118,9 +118,27 @@ bool ServiceBase::UninstallService()
 	SERVICE_STATUS status;
 	if (::ControlService(hService, SERVICE_CONTROL_STOP, &status))
 	{
-		while (::QueryServiceStatus(hService, &status) != SERVICE_STOPPED)
+		printf("Stopping %s\n", m_displayName);
+		Sleep(1000);
+		while (QueryServiceStatus(hService, &status))
 		{
-			Sleep(100);
+			if (status.dwCurrentState == SERVICE_STOP_PENDING)
+			{
+				printf("stop pending...\n");
+				Sleep(1000);
+			}
+			else
+			{
+				break;
+			}
+		}
+		if (status.dwCurrentState == SERVICE_STOPPED)
+		{
+			printf("%s is stopped.\n", m_displayName);
+		}
+		else
+		{
+			printf("%s failed to stop.\n", m_displayName);
 		}
 	}
 
