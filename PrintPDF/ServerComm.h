@@ -4,7 +4,7 @@
 #include "NG_errno.h"
 #include "NG_types.h"
 #include "NG_Handle.h"
-#include "RollDataDefinition.h"
+#include "RollScheduleDefinition.h"
 
 struct COMM_DATA_HEAD{
 	short sTelID;//电文识别号
