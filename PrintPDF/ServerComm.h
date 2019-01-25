@@ -30,7 +30,7 @@ private:
 	int m_iCount;//通道数
 public:
 	bool m_isNewRollData;//是否是新轧制信息
-	ROLLDATA m_newRollData;//轧制信息
+	ROLLSchedule m_newRollData;//轧制信息
 	void *m_pBuff;//缓存区
 
 public:
