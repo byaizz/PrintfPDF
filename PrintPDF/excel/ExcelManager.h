@@ -218,7 +218,7 @@ public:
 	// Author:		byshi
 	// Date:		2019-1-28	
 	//************************************************************************
-	void SetPassData(const PDF::PassData &passData);
+	void SetPassData(const PDF::PassData (&passData)[PASSMAX]);
 	
 	//************************************************************************
 	// Method:		Find	查找指定文本的位置

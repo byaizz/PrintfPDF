@@ -1,6 +1,8 @@
 #ifndef ROLLSCHEDULEDEFINITION_H
 #define ROLLSCHEDULEDEFINITION_H
 
+#define PASSMAX 30
+
 namespace PDF{
 
 	//PDI信息
@@ -97,7 +99,7 @@ namespace PDF{
 		RollSetup rollSetup;//轧制设定信息
 		MillData millDataRM;//粗轧轧机轧辊信息
 		MillData millDataFM;//精轧轧机轧辊信息
-		PassData passData[30];//道次信息
+		PassData passData[PASSMAX];//道次信息
 	};
 }
 
