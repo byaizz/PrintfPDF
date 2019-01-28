@@ -9,6 +9,7 @@
 #include "CRange.h"
 #include "CPageSetup.h"
 #include "CFont0.h"
+#include "..\RollScheduleDefinition.h"
 
 
 class ExcelManager
@@ -164,6 +165,72 @@ public:
 	// Date:		2018-12-7	
 	//************************************************************************
 	bool SwitchWorksheet(const CString &sheetName);
+	
+	//************************************************************************
+	// Method:		SetRollData		设置轧制数据
+	// Returns:		bool
+	// Parameter:	const ROLLDATA & rollData	轧制数据结构体
+	// Author:		byshi
+	// Date:		2019-1-25	
+	//************************************************************************
+	void SetRollData(const PDF::ROLLSchedule &rollData);
+	
+	//************************************************************************
+	// Method:		SetPDIData	设置PDI数据
+	// Returns:		bool
+	// Parameter:	const PDF::PDIData & pdiData	PDI数据结构体
+	// Author:		byshi
+	// Date:		2019-1-28	
+	//************************************************************************
+	void SetPDIData(const PDF::PDIData &pdiData);
+	
+	//************************************************************************
+	// Method:		SetRollSetup	设置轧制设定信息
+	// Returns:		bool
+	// Parameter:	const PDF::RollSetup & rollSetup	轧制设定信息数据结构体
+	// Author:		byshi
+	// Date:		2019-1-28	
+	//************************************************************************
+	void SetRollSetup(const PDF::RollSetup &rollSetup);
+	
+	//************************************************************************
+	// Method:		SetMillDataRM	设置粗轧轧机轧辊信息
+	// Returns:		bool
+	// Parameter:	const PDF::MillData & millDataRM	粗轧轧机轧辊信息数据结构体
+	// Author:		byshi
+	// Date:		2019-1-28	
+	//************************************************************************
+	void SetMillDataRM(const PDF::MillData &millDataRM);
+	
+	//************************************************************************
+	// Method:		SetMillDataFM	设置精轧轧机轧辊信息
+	// Returns:		bool
+	// Parameter:	const PDF::MillData & millDataFM	精轧轧机轧辊信息数据结构体
+	// Author:		byshi
+	// Date:		2019-1-28	
+	//************************************************************************
+	void SetMillDataFM(const PDF::MillData &millDataFM);
+	
+	//************************************************************************
+	// Method:		SetPassData		设置道次数据
+	// Returns:		bool
+	// Parameter:	const PDF::PassData & passData	道次数据结构体
+	// Author:		byshi
+	// Date:		2019-1-28	
+	//************************************************************************
+	void SetPassData(const PDF::PassData &passData);
+	
+	//************************************************************************
+	// Method:		Find	查找指定文本的位置
+	// Returns:		bool
+	// Parameter:	const CString & text	需要查询的文本内容
+	// Parameter:	int 
+	// Parameter:	& index
+	// Parameter:	[2]
+	// Author:		byshi
+	// Date:		2019-1-28	
+	//************************************************************************
+	bool Find(const CString &text, long (&index)[2]);
 
 	void Test1();
 
@@ -221,4 +288,6 @@ private:
 	COleVariant		covTrue;
 	COleVariant		covFalse;
 	COleVariant		covOptional;
+
+	COleSafeArray safeArray;//安全数组，用于保存excel数据
 };

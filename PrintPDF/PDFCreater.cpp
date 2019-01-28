@@ -28,11 +28,10 @@ void PDFCreater::Run()
  	if (m_comm.m_isNewRollData == true)
  	{
 		//在此处将数据写入到excel，并输出为pdf文件
-		if (m_excel.OpenFromTemplate(_T("E:\\test_by.xlsx")))
+		if (m_excel.OpenFromTemplate(_T("E:\\pdf数据表_wq.xlsx")))
 		{
-			m_excel.Test1();
+			m_excel.SetRollData(m_comm.m_newRollData);
 			m_excel.SaveAsPDF(_T("E:\\test_by.pdf"));
-			m_comm.m_isNewRollData = false;
 		}
 		m_excel.Close();
 		m_comm.m_isNewRollData = false;

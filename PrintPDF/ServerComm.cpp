@@ -6,7 +6,7 @@
 #include <iostream>
 
 #define GUI_SERVICE_COMM_CFG	"ServerComm.cfg"
-#define BUFF_MAX	5000
+#define BUFF_MAX	15000
 
 ServerComm::ServerComm(void)
 :m_hComm(NULL)

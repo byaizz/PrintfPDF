@@ -1,7 +1,7 @@
 #ifndef ROLLSCHEDULEDEFINITION_H
 #define ROLLSCHEDULEDEFINITION_H
 
-namespace PDFCreater{
+namespace PDF{
 
 	//PDI信息
 	struct PDIData{
@@ -95,8 +95,8 @@ namespace PDFCreater{
 	struct ROLLSchedule{
 		PDIData pdiData;//PDI信息
 		RollSetup rollSetup;//轧制设定信息
-		MillData millDataRM;//粗轧轧机信息
-		MillData millDataFM;//精轧轧机信息
+		MillData millDataRM;//粗轧轧机轧辊信息
+		MillData millDataFM;//精轧轧机轧辊信息
 		PassData passData[30];//道次信息
 	};
 }
