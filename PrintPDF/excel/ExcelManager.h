@@ -80,16 +80,6 @@ public:
 	bool IsFileExist(const CString &fileName);
 	
 	//************************************************************************
-	// Method:		IsRegionEqual	判断单元格区域是否与二维数组区域大小相同
-	// Returns:		bool
-	// Parameter:	CRange & iRange		单元格区域
-	// Parameter:	COleSafeArray & iTwoDimArray	二维数组
-	// Author:		byshi
-	// Date:		2018-12-7	
-	//************************************************************************
-	bool IsRegionEqual(CRange &iRange,COleSafeArray &iTwoDimArray);
-	
-	//************************************************************************
 	// Method:		Open	打开文件
 	// Returns:		bool
 	// Parameter:	const CString & iFileName	文件路径名
@@ -175,6 +165,82 @@ public:
 	//************************************************************************
 	void SetRollingData(const PDF::ROLLSchedule &rollingData);
 	
+	void Test1();
+
+protected:	
+	//************************************************************************
+	// Method:		GetRange	获取CRange对象的指针
+	// Returns:		CRange *
+	// Author:		byshi
+	// Date:		2018-12-12	
+	//************************************************************************
+	CRange *GetRange();
+	
+	//************************************************************************
+	// Method:		GetWorkbook		获取CWorkbook对象的指针
+	// Returns:		CWorkbook *
+	// Author:		byshi
+	// Date:		2018-12-12	
+	//************************************************************************
+	CWorkbook *GetWorkbook();
+	
+	//************************************************************************
+	// Method:		GetWorkbooks	获取CWorkbooks对象的指针
+	// Returns:		CWorkbooks *
+	// Author:		byshi
+	// Date:		2018-12-12	
+	//************************************************************************
+	CWorkbooks *GetWorkbooks();
+	
+	//************************************************************************
+	// Method:		GetWorksheet	获取CWorksheet对象的指针
+	// Returns:		CWorksheet *
+	// Author:		byshi
+	// Date:		2018-12-12	
+	//************************************************************************
+	CWorksheet *GetWorksheet();
+	
+	//************************************************************************
+	// Method:		GetWorksheets	获取CWorksheets对象的指针
+	// Returns:		CWorksheets *
+	// Author:		byshi
+	// Date:		2018-12-12	
+	//************************************************************************
+	CWorksheets *GetWorksheets();
+
+	//************************************************************************
+	// Method:		Find	查找指定文本的位置
+	// Returns:		bool
+	// Parameter:	const CString & text	需要查询的文本内容
+	// Parameter:	int 
+	// Parameter:	& index		若文本存在，保存文本位置索引
+	// Parameter:	[2]
+	// Author:		byshi
+	// Date:		2019-1-28	
+	//************************************************************************
+	bool Find(const CString &text, long (&index)[2]);
+
+	//************************************************************************
+	// Method:		FindByColumn	从指定列查找指定文本的索引位置
+	// Returns:		bool
+	// Parameter:	const CString & text	需要查询的文本内容
+	// Parameter:	const long column	要查询的列的列索引
+	// Parameter:	long & row	返回查询结果的行索引
+	// Author:		byshi
+	// Date:		2019-1-29	
+	//************************************************************************
+	bool FindByColumn(const CString &text, const long column, long &row);
+
+	//************************************************************************
+	// Method:		IsRegionEqual	判断单元格区域是否与二维数组区域大小相同
+	// Returns:		bool
+	// Parameter:	CRange & iRange		单元格区域
+	// Parameter:	COleSafeArray & iTwoDimArray	二维数组
+	// Author:		byshi
+	// Date:		2018-12-7	
+	//************************************************************************
+	bool IsRegionEqual(CRange &iRange,COleSafeArray &iTwoDimArray);
+	
 	//************************************************************************
 	// Method:		SetTitle	设置标题
 	// Returns:		void
@@ -237,74 +303,6 @@ public:
 	//************************************************************************
 	void SetPassData(const PDF::PassData (&passData)[PASS_MAX]);
 	
-	//************************************************************************
-	// Method:		Find	查找指定文本的位置
-	// Returns:		bool
-	// Parameter:	const CString & text	需要查询的文本内容
-	// Parameter:	int 
-	// Parameter:	& index		若文本存在，保存文本位置索引
-	// Parameter:	[2]
-	// Author:		byshi
-	// Date:		2019-1-28	
-	//************************************************************************
-	bool Find(const CString &text, long (&index)[2]);
-
-	//************************************************************************
-	// Method:		FindByColumn	从指定列查找指定文本的索引位置
-	// Returns:		bool
-	// Parameter:	const CString & text	需要查询的文本内容
-	// Parameter:	const long column	要查询的列的列索引
-	// Parameter:	long & row	返回查询结果的行索引
-	// Author:		byshi
-	// Date:		2019-1-29	
-	//************************************************************************
-	bool FindByColumn(const CString &text, const long column, long &row);
-
-	void Test1();
-
-public://not use
-	//此处暂时不用，若需要的功能该类未封装，可使用以下函数获取book、sheet自定义操作
-	
-	//************************************************************************
-	// Method:		GetRange	获取CRange对象的指针
-	// Returns:		CRange *
-	// Author:		byshi
-	// Date:		2018-12-12	
-	//************************************************************************
-	CRange *GetRange();
-	
-	//************************************************************************
-	// Method:		GetWorkbook		获取CWorkbook对象的指针
-	// Returns:		CWorkbook *
-	// Author:		byshi
-	// Date:		2018-12-12	
-	//************************************************************************
-	CWorkbook *GetWorkbook();
-	
-	//************************************************************************
-	// Method:		GetWorkbooks	获取CWorkbooks对象的指针
-	// Returns:		CWorkbooks *
-	// Author:		byshi
-	// Date:		2018-12-12	
-	//************************************************************************
-	CWorkbooks *GetWorkbooks();
-	
-	//************************************************************************
-	// Method:		GetWorksheet	获取CWorksheet对象的指针
-	// Returns:		CWorksheet *
-	// Author:		byshi
-	// Date:		2018-12-12	
-	//************************************************************************
-	CWorksheet *GetWorksheet();
-	
-	//************************************************************************
-	// Method:		GetWorksheets	获取CWorksheets对象的指针
-	// Returns:		CWorksheets *
-	// Author:		byshi
-	// Date:		2018-12-12	
-	//************************************************************************
-	CWorksheets *GetWorksheets();
-
 private:
 	CApplication	m_app;
 	CRange			m_range;
