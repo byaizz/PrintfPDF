@@ -173,7 +173,15 @@ public:
 	// Author:		byshi
 	// Date:		2019-1-25	
 	//************************************************************************
-	void SetRollData(const PDF::ROLLSchedule &rollData);
+	void SetRollingData(const PDF::ROLLSchedule &rollingData);
+	
+	//************************************************************************
+	// Method:		SetTitle	设置标题
+	// Returns:		void
+	// Author:		byshi
+	// Date:		2019-1-29	
+	//************************************************************************
+	void SetTitle();
 	
 	//************************************************************************
 	// Method:		SetPDIData	设置PDI数据
@@ -212,25 +220,45 @@ public:
 	void SetMillDataFM(const PDF::MillData &millDataFM);
 	
 	//************************************************************************
+	// Method:		SetRollData		设置轧辊信息
+	// Returns:		void
+	// Parameter:	const PDF::RollData & rollData
+	// Author:		byshi
+	// Date:		2019-1-29	
+	//************************************************************************
+	void SetRollData(const PDF::RollData &rollData, const long (&startIndex)[2]);
+	
+	//************************************************************************
 	// Method:		SetPassData		设置道次数据
 	// Returns:		bool
 	// Parameter:	const PDF::PassData & passData	道次数据结构体
 	// Author:		byshi
 	// Date:		2019-1-28	
 	//************************************************************************
-	void SetPassData(const PDF::PassData (&passData)[PASSMAX]);
+	void SetPassData(const PDF::PassData (&passData)[PASS_MAX]);
 	
 	//************************************************************************
 	// Method:		Find	查找指定文本的位置
 	// Returns:		bool
 	// Parameter:	const CString & text	需要查询的文本内容
 	// Parameter:	int 
-	// Parameter:	& index
+	// Parameter:	& index		若文本存在，保存文本位置索引
 	// Parameter:	[2]
 	// Author:		byshi
 	// Date:		2019-1-28	
 	//************************************************************************
 	bool Find(const CString &text, long (&index)[2]);
+
+	//************************************************************************
+	// Method:		FindByColumn	从指定列查找指定文本的索引位置
+	// Returns:		bool
+	// Parameter:	const CString & text	需要查询的文本内容
+	// Parameter:	const long column	要查询的列的列索引
+	// Parameter:	long & row	返回查询结果的行索引
+	// Author:		byshi
+	// Date:		2019-1-29	
+	//************************************************************************
+	bool FindByColumn(const CString &text, const long column, long &row);
 
 	void Test1();
 

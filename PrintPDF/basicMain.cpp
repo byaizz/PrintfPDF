@@ -13,7 +13,7 @@ unsigned int _stdcall service_thread_func(void *exitFlag)
 
 	if (S_OK != CoInitialize(NULL))//init
 	{
-		printf("≥ı ºªØole ß∞‹\n");
+		printf("≥ı ºªØcomø‚ ß∞‹\n");
 		return -1;
 	}
 
