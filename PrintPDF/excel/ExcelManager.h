@@ -10,6 +10,7 @@
 #include "CPageSetup.h"
 #include "CFont0.h"
 #include "..\RollScheduleDefinition.h"
+#include <comutil.h>
 
 
 class ExcelManager
@@ -43,7 +44,7 @@ public:
 	// Author:		byshi
 	// Date:		2018-12-10	
 	//************************************************************************
-	bool GetCellsValue(COleVariant startCell,COleVariant endCell,
+	bool GetCellsValue(_variant_t startCell,_variant_t endCell,
 		VARIANT &iData);
 
 	//************************************************************************
@@ -55,7 +56,7 @@ public:
 	// Author:		byshi
 	// Date:		2018-12-10	
 	//************************************************************************
-	bool GetCellValue(COleVariant rowIndex, COleVariant columnIndex,VARIANT &data);
+	bool GetCellValue(_variant_t rowIndex, _variant_t columnIndex,VARIANT &data);
 	
 	//************************************************************************
 	// Method:		IsFileExist		判断文件或文件夹是否存在
@@ -120,7 +121,7 @@ public:
 	// Author:		byshi
 	// Date:		2018-12-7	
 	//************************************************************************
-	bool SetCellsValue(COleVariant startCell,COleVariant endCell,
+	bool SetCellsValue(_variant_t startCell,_variant_t endCell,
 		COleSafeArray &iTwoDimArray);
 	
 	//************************************************************************
@@ -132,7 +133,7 @@ public:
 	// Author:		byshi
 	// Date:		2018-12-7	
 	//************************************************************************
-	bool SetCellValue(COleVariant rowIndex, COleVariant columnIndex,COleVariant data);
+	bool SetCellValue(_variant_t rowIndex, _variant_t columnIndex,_variant_t data);
 	
 	//************************************************************************
 	// Method:		SwitchWorksheet		切换sheet
@@ -141,7 +142,7 @@ public:
 	// Author:		byshi
 	// Date:		2018-12-7	
 	//************************************************************************
-	bool SwitchWorksheet(const CString &sheetName);
+	bool SwitchWorksheet(const long &sheetIndex);
 	
 	void Test1();
 
@@ -204,7 +205,7 @@ private:
 	CWorksheet		m_worksheet;
 	CWorksheets		m_worksheets;
 
-	COleVariant		covTrue;
-	COleVariant		covFalse;
-	COleVariant		covOptional;
+	_variant_t		covTrue;
+	_variant_t		covFalse;
+	_variant_t		covOptional;
 };

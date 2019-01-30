@@ -246,7 +246,7 @@ void PDFCreater::SetPDIData()
 	{
 		index[1] += 2;
 		tempStr.Format(_T("%s"),pdiData.steelGrade);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 		index[1] += 1;
 		safeArray.PutElement(index,&var);
@@ -255,91 +255,91 @@ void PDFCreater::SetPDIData()
 	{
 		index[1] += 3;
 		tempStr.Format(_T("%d-%d"),pdiData.furnaceNo,pdiData.furnaceCol);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("终轧温度 [oC]"),index))
 	{
 		index[1] += 2;
 		tempStr.Format(_T("%d"),pdiData.finalTemp);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("板坯宽度 [mm]"),index))
 	{
 		index[1] += 2;
 		tempStr.Format(_T("%ld"),pdiData.slabWidthL3);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),pdiData.slabWidthAct);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("板坯厚度 [mm]"),index))
 	{
 		index[1] += 2;
 		tempStr.Format(_T("%ld"),pdiData.slabThickL3);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),pdiData.slabThickAct);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("钢板长度[mm]"),index))
 	{
 		index[1] += 2;
 		tempStr.Format(_T("%ld"),pdiData.slabLengthL3);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),pdiData.slabLengthAct);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("板坯重量"),index))
 	{
 		index[1] += 2;
 		tempStr.Format(_T("%ld"),pdiData.slabWeightL3);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),pdiData.slabWeightAct);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("厚度 [mm]"),index))
 	{
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),pdiData.plateThickSet);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),pdiData.plateThickAct);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("宽度 [mm]"),index))
 	{
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),pdiData.plateWidthSet);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),pdiData.plateWidthAct);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("长度 [mm]"),index))
 	{
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),pdiData.plateLengthSet);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),pdiData.plateLengthAct);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 }
@@ -354,42 +354,42 @@ void PDFCreater::SetRollSetup()
 	{
 		index[1] += 1;
 		tempStr.Format(_T("%d"),rollSetup.ctrlMode);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("总道次数"),index))
 	{
 		index[1] += 1;
 		tempStr.Format(_T("%d"),rollSetup.totalPassNum);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("转钢模式"),index))
 	{
 		index[1] += 1;
 		tempStr.Format(_T("%d"),rollSetup.turnMode);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("转钢道次"),index))
 	{
 		index[1] += 1;
 		tempStr.Format(_T("%d"),rollSetup.turnPassNum);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("转钢厚度[mm]"),index))
 	{
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),rollSetup.turnThick);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 	if(Find(_T("控轧厚度[mm]"),index))
 	{
 		index[1] += 1;
 		tempStr.Format(_T("%ld"),rollSetup.controlThick);
-		var = COleVariant(tempStr);
+		var = _variant_t(tempStr);
 		safeArray.PutElement(index,&var);
 	}
 }
@@ -466,19 +466,19 @@ void PDFCreater::SetRollData(const PDF::RollData &rollData, const long (&startIn
 
 	index[1] += 1;
 	tempStr.Format(_T("%s"),rollData.RollID);
-	var = COleVariant(tempStr);
+	var = _variant_t(tempStr);
 	safeArray.PutElement(index,&var);
 	index[1] += 1;
 	tempStr.Format(_T("%s"),rollData.RollMaterial);
-	var = COleVariant(tempStr);
+	var = _variant_t(tempStr);
 	safeArray.PutElement(index,&var);
 	index[1] += 1;
 	tempStr.Format(_T("%ld"),rollData.RollDiameter);
-	var = COleVariant(tempStr);
+	var = _variant_t(tempStr);
 	safeArray.PutElement(index,&var);
 	index[1] += 1;
 	tempStr.Format(_T("%s"),rollData.RollStartTime);
-	var = COleVariant(tempStr);
+	var = _variant_t(tempStr);
 	safeArray.PutElement(index,&var);
 }
 
@@ -501,75 +501,75 @@ void PDFCreater::SetPassData(const PDF::PassData (&passData)[PASS_MAX])
 			index[0] = row+i+2;
 			index[1] = column+1;
 			tempStr.Format(_T("%d"),passData[i].passNo);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+2;
 			tempStr.Format(_T("%ld"),passData[i].passGapSet);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+3;
 			tempStr.Format(_T("%ld"),passData[i].passGapAct);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+4;
 			tempStr.Format(_T("%ld"),passData[i].passThickSet);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+5;
 			tempStr.Format(_T("%ld"),passData[i].passThickAct);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+6;
 			tempStr.Format(_T("%ld"),passData[i].passWidthSet);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+7;
 			tempStr.Format(_T("%ld"),passData[i].passWidthAct);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+8;
 			tempStr.Format(_T("%ld"),passData[i].passForceSet);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+9;
 			tempStr.Format(_T("%ld"),passData[i].passForceAct);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+10;
 			tempStr.Format(_T("%ld"),passData[i].passTorqueSet);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+11;
 			tempStr.Format(_T("%ld"),passData[i].passTorqueAct);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+12;
 			tempStr.Format(_T("%ld"),passData[i].passBendForceSet);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+13;
 			tempStr.Format(_T("%ld"),passData[i].passBendForceAct);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+14;
 			tempStr.Format(_T("%ld"),passData[i].passShiftSet);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+15;
 			tempStr.Format(_T("%ld"),passData[i].passShiftAct);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+16;
 			tempStr.Format(_T("%ld"),passData[i].passVelocity);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+17;
 			tempStr.Format(_T("%ld"),passData[i].passEntryTemp);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 			index[1] = column+18;
 			tempStr.Format(_T("%ld"),passData[i].passExitTemp);
-			var = COleVariant(tempStr);
+			var = _variant_t(tempStr);
 			safeArray.PutElement(index,&var);
 		}
 	}
