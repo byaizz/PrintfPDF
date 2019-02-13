@@ -1,8 +1,9 @@
 #ifndef ROLLSCHEDULEDEFINITION_H
 #define ROLLSCHEDULEDEFINITION_H
 
-#define PASS_MAX 20
-#define ID_LENGTH 256
+#define PASS_MAX 30		//轧制数据的道次上限
+#define ID_LENGTH 256	//ID字符串长度
+#define PASS_COUNT 20	//每个sheet中的道次信息数量
 
 namespace PDF{
 
@@ -75,6 +76,10 @@ namespace PDF{
 
 	//道次信息
 	struct PassData{
+		enum MILL_TYPE{
+			RM,		//粗轧
+			FM		//精轧
+		};
 		int millType;//轧机类型(RM/FM)
 		int passNo;//道次号
 		double passGapSet;//道次辊缝设定值
