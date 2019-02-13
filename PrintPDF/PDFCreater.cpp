@@ -120,7 +120,9 @@ void PDFCreater::Run()
 			CreateTestData();
 			memcpy(&m_comm.m_newRollData, &rollSchedu, sizeof(PDF::ROLLSchedule));
 			SetRollingData();
-			m_excel.SaveAsPDF(_T("E:\\test_by.pdf"));
+			CString fileName;//文件保存路径
+			fileName.Format(_T("E:\\%s.pdf"),m_comm.m_newRollData.pdiData.slabID);
+			m_excel.SaveAsPDF(fileName);
 		}
 		m_excel.Close();
 		m_comm.m_isNewRollData = false;
