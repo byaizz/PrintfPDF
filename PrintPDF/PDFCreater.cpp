@@ -3,6 +3,48 @@
 
 using namespace std;
 
+static PDF::ROLLSchedule rollSchedu;
+void CreateTestData()
+{
+	rollSchedu.millDataFM.downBackupRoll.RollDiameter = 1024;
+	strcpy(rollSchedu.millDataFM.downBackupRoll.RollID,"RollID");
+	strcpy(rollSchedu.millDataFM.downBackupRoll.RollMaterial,"RollMaterial");
+	strcpy(rollSchedu.millDataFM.downBackupRoll.RollStartTime,"20190212");
+	memcpy(&rollSchedu.millDataFM.upBackupRoll,&rollSchedu.millDataFM.downBackupRoll,sizeof(PDF::RollData));
+	memcpy(&rollSchedu.millDataFM.downWorkRoll,&rollSchedu.millDataFM.downBackupRoll,sizeof(PDF::RollData));
+	memcpy(&rollSchedu.millDataFM.upWorkRoll,&rollSchedu.millDataFM.downBackupRoll,sizeof(PDF::RollData));
+
+	memcpy(&rollSchedu.millDataRM,&rollSchedu.millDataFM,sizeof(PDF::MillData));
+
+	rollSchedu.rollSetup.totalPassNum = 25;
+
+	strcpy(rollSchedu.pdiData.slabID,"slabID");
+	strcpy(rollSchedu.pdiData.steelGrade,"steelGrade");
+
+	for (int i = 0; i <= PASS_MAX; ++i)
+	{
+		rollSchedu.passData[i].millType = i % 2;
+		rollSchedu.passData[i].passNo = i + 1;
+		rollSchedu.passData[i].passGapSet = i + 1000;
+		rollSchedu.passData[i].passGapAct = i + 1000;
+		rollSchedu.passData[i].passThickSet = i + 1000;
+		rollSchedu.passData[i].passThickAct = i + 1000;
+		rollSchedu.passData[i].passWidthSet = i + 1000;
+		rollSchedu.passData[i].passWidthAct = i + 1000;
+		rollSchedu.passData[i].passForceSet = i + 1000;
+		rollSchedu.passData[i].passForceAct = i + 1000;
+		rollSchedu.passData[i].passTorqueSet = i + 1000;
+		rollSchedu.passData[i].passTorqueAct = i + 1000;
+		rollSchedu.passData[i].passBendForceSet = i + 1000;
+		rollSchedu.passData[i].passBendForceAct = i + 1000;
+		rollSchedu.passData[i].passShiftSet = i + 1;
+		rollSchedu.passData[i].passShiftAct = i + 1;
+		rollSchedu.passData[i].passVelocity = i + 1;
+		rollSchedu.passData[i].passEntryTemp = i + 1000;
+		rollSchedu.passData[i].passExitTemp = i + 1000;
+	}
+}
+
 PDFCreater::PDFCreater(void)
 :firstLBound(0)
 ,firstUBound(0)
@@ -51,14 +93,32 @@ bool PDFCreater::CreateTwoDimSafeArray(COleSafeArray &safeArray, DWORD dimElemen
 	return true;
 }
 
+CString PDFCreater::GetTime()
+{
+	time_t t;
+	time(&t);
+	tm *local = localtime(&t);
+	CString timeStr;
+	timeStr.Format(_T("%d年%d月%d日%d时%d分%d秒"), 
+		local->tm_year + 1990, 
+		local->tm_mon + 1, 
+		local->tm_mday, 
+		local->tm_hour, 
+		local->tm_min, 
+		local->tm_sec);
+	return timeStr;
+}
+
 void PDFCreater::Run()
 {
-	m_comm.RecvData();
- 	if (m_comm.m_isNewRollData == true)
+	//m_comm.RecvData();
+ 	//if (m_comm.m_isNewRollData == true)
  	{
 		//在此处将数据写入到excel，并输出为pdf文件
 		if (m_excel.OpenFromTemplate(_T("E:\\pdf数据表_wq.xlsx")))
 		{
+			CreateTestData();
+			memcpy(&m_comm.m_newRollData, &rollSchedu, sizeof(PDF::ROLLSchedule));
 			SetRollingData();
 			m_excel.SaveAsPDF(_T("E:\\test_by.pdf"));
 		}
@@ -69,7 +129,6 @@ void PDFCreater::Run()
 
 void PDFCreater::SetRollingData()
 {
-	const PDF::ROLLSchedule &rollingData = m_comm.m_newRollData;
 	//获取数据并根据索引写入数据
 	m_excel.GetCellsValue(_T("$A$1"),_T("$Z$35"),safeArray);//读取数据
 	UpdateSafeArrayBound();//更新安全数组的边界信息
@@ -81,89 +140,20 @@ void PDFCreater::SetRollingData()
 	m_excel.SetCellsValue(_T("$A$1"),_T("$Z$35"),safeArray);//写入数据
 
 	//当前每个sheet可写入20道次数据信息，可根据需要修改
-	int sheetNum = rollingData.rollSetup.totalPassNum / 20;
-	for (int i =0; i <rollingData.rollSetup.totalPassNum; ++i)
+	int totalPassNum = m_comm.m_newRollData.rollSetup.totalPassNum;
+	int sheetNum = totalPassNum / PASS_COUNT;//总页数
+	if (totalPassNum % PASS_COUNT != 0)
 	{
-// 		GetCellsValue(_T("$A$1"),_T("$Z$35"),safeArray)
-// 			if (passData[i].passNo <= 0 || passData[i].passNo >= PASS_MAX)
-// 			{
-// 				//	break;
-// 			}
-// 			index[0] = row+i+2;
-// 			index[1] = column+1;
-// 			tempStr.Format(_T("%d"),passData[i].passNo);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+2;
-// 			tempStr.Format(_T("%ld"),passData[i].passGapSet);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+3;
-// 			tempStr.Format(_T("%ld"),passData[i].passGapAct);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+4;
-// 			tempStr.Format(_T("%ld"),passData[i].passThickSet);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+5;
-// 			tempStr.Format(_T("%ld"),passData[i].passThickAct);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+6;
-// 			tempStr.Format(_T("%ld"),passData[i].passWidthSet);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+7;
-// 			tempStr.Format(_T("%ld"),passData[i].passWidthAct);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+8;
-// 			tempStr.Format(_T("%ld"),passData[i].passForceSet);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+9;
-// 			tempStr.Format(_T("%ld"),passData[i].passForceAct);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+10;
-// 			tempStr.Format(_T("%ld"),passData[i].passTorqueSet);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+11;
-// 			tempStr.Format(_T("%ld"),passData[i].passTorqueAct);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+12;
-// 			tempStr.Format(_T("%ld"),passData[i].passBendForceSet);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+13;
-// 			tempStr.Format(_T("%ld"),passData[i].passBendForceAct);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+14;
-// 			tempStr.Format(_T("%ld"),passData[i].passShiftSet);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+15;
-// 			tempStr.Format(_T("%ld"),passData[i].passShiftAct);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+16;
-// 			tempStr.Format(_T("%ld"),passData[i].passVelocity);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+17;
-// 			tempStr.Format(_T("%ld"),passData[i].passEntryTemp);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
-// 			index[1] = column+18;
-// 			tempStr.Format(_T("%ld"),passData[i].passExitTemp);
-// 			var = COleVariant(tempStr);
-// 			safeArray.PutElement(index,&var);
+		++sheetNum;
 	}
-	SetPassData(rollingData.passData);//设置道次信息
+	for (int i =0; i < sheetNum - 1; ++i)
+	{
+		if (m_excel.CopyCurrentSheet())
+		{
+			cout<<"复制当前sheet成功."<<endl;
+		}
+	}
+	SetPassDatas();//设置道次信息
 
 	// 	CPageSetup pageSetUp;
 	// 	pageSetUp.AttachDispatch(m_worksheet.get_PageSetup());
@@ -233,7 +223,25 @@ bool PDFCreater::FindByColumn(const CString &text, const long column, long &row)
 
 void PDFCreater::SetTitle()
 {
+	long index[2] = {0};
+	VARIANT var;
+	CString tempStr;
 
+	if (Find(_T("**钢铁有限公司中厚板生产线"),index))
+	{
+		tempStr = _T("南京钢铁有限公司中厚板生产线");
+		var = _variant_t(tempStr);
+		safeArray.PutElement(index,&var);//
+	}
+	if (Find(_T("轧制规程表 钢号:   ，生成时间：  "),index))
+	{
+		tempStr.Format(_T("轧制规程表 钢号:%s, 生成时间："), 
+			m_comm.m_newRollData.pdiData.slabID);	
+		CString timeStr = GetTime();
+		tempStr += timeStr;
+		var = _variant_t(tempStr);
+		safeArray.PutElement(index,&var);//
+	}
 }
 
 void PDFCreater::SetPDIData()
@@ -482,95 +490,128 @@ void PDFCreater::SetRollData(const PDF::RollData &rollData, const long (&startIn
 	safeArray.PutElement(index,&var);
 }
 
-void PDFCreater::SetPassData(const PDF::PassData (&passData)[PASS_MAX])
+void PDFCreater::SetPassDatas()
 {
+	const PDF::PassData *passDatas = m_comm.m_newRollData.passData;
 	long index[2] = {0};
-	VARIANT var;
-	CString tempStr;
+	long sheetCount = m_excel.GetSheetCount();//获取sheet数量
 
-	if(Find(_T("轧机（RM/FM)"),index))
+	//为每个sheet写入道次数据信息
+	for (long sheetIndex = 1; sheetIndex <= sheetCount; ++sheetIndex)
 	{
-		long row = index[0];
-		long column = index[1];
-		for (int i = 0; i < PASS_MAX; ++i)
+		m_excel.SwitchWorksheet(sheetIndex);//切换sheet
+		m_excel.GetCellsValue(_T("$A$13"),_T("$Z$35"),safeArray);//读取数据
+		UpdateSafeArrayBound();//更新安全数组的边界信息
+
+		if(Find(_T("轧机（RM/FM)"),index))
 		{
-			if (passData[i].passNo <= 0 || passData[i].passNo >= PASS_MAX)
+			index[0] += 2;
+			for (int i = 0; i < PASS_COUNT; ++i)
 			{
-				//	break;
+				int passIndex = i + (sheetIndex-1)*PASS_COUNT;
+				//道次校验
+				if (passIndex >= PASS_MAX || passDatas[passIndex].passNo <= 0)
+				{
+					break;
+				}
+				//设置道次信息到数组
+				SetPassData(passDatas[passIndex],index);
+				index[0] += 1;
 			}
-			index[0] = row+i+2;
-			index[1] = column+1;
-			tempStr.Format(_T("%d"),passData[i].passNo);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+2;
-			tempStr.Format(_T("%ld"),passData[i].passGapSet);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+3;
-			tempStr.Format(_T("%ld"),passData[i].passGapAct);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+4;
-			tempStr.Format(_T("%ld"),passData[i].passThickSet);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+5;
-			tempStr.Format(_T("%ld"),passData[i].passThickAct);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+6;
-			tempStr.Format(_T("%ld"),passData[i].passWidthSet);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+7;
-			tempStr.Format(_T("%ld"),passData[i].passWidthAct);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+8;
-			tempStr.Format(_T("%ld"),passData[i].passForceSet);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+9;
-			tempStr.Format(_T("%ld"),passData[i].passForceAct);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+10;
-			tempStr.Format(_T("%ld"),passData[i].passTorqueSet);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+11;
-			tempStr.Format(_T("%ld"),passData[i].passTorqueAct);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+12;
-			tempStr.Format(_T("%ld"),passData[i].passBendForceSet);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+13;
-			tempStr.Format(_T("%ld"),passData[i].passBendForceAct);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+14;
-			tempStr.Format(_T("%ld"),passData[i].passShiftSet);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+15;
-			tempStr.Format(_T("%ld"),passData[i].passShiftAct);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+16;
-			tempStr.Format(_T("%ld"),passData[i].passVelocity);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+17;
-			tempStr.Format(_T("%ld"),passData[i].passEntryTemp);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
-			index[1] = column+18;
-			tempStr.Format(_T("%ld"),passData[i].passExitTemp);
-			var = _variant_t(tempStr);
-			safeArray.PutElement(index,&var);
 		}
+		m_excel.SetCellsValue(_T("$A$13"),_T("$Z$35"),safeArray);//写入数据到表格
 	}
+}
+
+void PDFCreater::SetPassData(const PDF::PassData &passData, const long (&startIndex)[2])
+{
+	VARIANT var;//临时存储变量
+	CString tempStr;//临时存储变量
+
+	long index[2] = {0};
+	index[0] = startIndex[0];
+	index[1] = startIndex[1];
+
+	if (passData.millType == PDF::PassData::MILL_TYPE::RM)
+	{
+		tempStr = _T("RM");
+	}
+	else if (passData.millType == PDF::PassData::MILL_TYPE::FM)
+	{
+		tempStr = _T("FM");
+	}
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//轧机类型
+	index[1] += 1;
+	tempStr.Format(_T("%d"),passData.passNo);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次号
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passGapSet);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次辊缝设定值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passGapAct);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次辊缝实际值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passThickSet);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次厚度设定值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passThickAct);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次厚度实际值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passWidthSet);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次宽度设定值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passWidthAct);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次宽度实际值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passForceSet);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次轧制力设定值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passForceAct);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次轧制力实际值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passTorqueSet);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次力矩设定值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passTorqueAct);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次力矩实际值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passBendForceSet);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次弯辊力设定值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passBendForceAct);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次弯辊力实际值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passShiftSet);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次窜辊设定值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passShiftAct);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次窜辊实际值
+	index[1] += 1;
+	tempStr.Format(_T("%.2lf"),passData.passVelocity);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次速度
+	index[1] += 1;
+	tempStr.Format(_T("%d"),passData.passEntryTemp);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次入口温度
+	index[1] += 1;
+	tempStr.Format(_T("%d"),passData.passExitTemp);
+	var = _variant_t(tempStr);
+	safeArray.PutElement(index,&var);//道次出口温度
 }

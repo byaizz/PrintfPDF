@@ -25,6 +25,14 @@ public:
 		DWORD dimElements2, long iLBound1 = 1, long iLBound2 = 1);
 	
 	//************************************************************************
+	// Method:		GetTime		获取当前系统时间
+	// Returns:		CString		返回当前系统时间
+	// Author:		byshi
+	// Date:		2019-2-13	
+	//************************************************************************
+	CString GetTime();
+	
+	//************************************************************************
 	// Method:		SetRollData		设置轧制数据
 	// Returns:		bool
 	// Parameter:	const ROLLDATA & rollData	轧制数据结构体
@@ -119,13 +127,23 @@ protected:
 	void SetRollData(const PDF::RollData &rollData, const long (&startIndex)[2]);
 	
 	//************************************************************************
-	// Method:		SetPassData		设置道次数据
+	// Method:		SetPassDatas		设置道次数据
 	// Returns:		bool
 	// Parameter:	const PDF::PassData & passData	道次数据结构体
 	// Author:		byshi
 	// Date:		2019-1-28	
 	//************************************************************************
-	void SetPassData(const PDF::PassData (&passData)[PASS_MAX]);
+	void SetPassDatas();
+	
+	//************************************************************************
+	// Method:		SetPassData		设置单个道次数据
+	// Returns:		void
+	// Parameter:	const PDF::PassData & passData		道次数据信息
+	// Parameter:	const long & startIndex[2]		起始索引位置
+	// Author:		byshi
+	// Date:		2019-2-12	
+	//************************************************************************
+	void SetPassData(const PDF::PassData &passData, const long (&startIndex)[2]);
 
 private:
 	ExcelManager m_excel;
