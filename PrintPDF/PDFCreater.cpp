@@ -111,14 +111,14 @@ CString PDFCreater::GetTime()
 
 void PDFCreater::Run()
 {
-	//m_comm.RecvData();
- 	//if (m_comm.m_isNewRollData == true)
+	m_comm.RecvData();
+ 	if (m_comm.m_isNewRollData == true)
  	{
 		//在此处将数据写入到excel，并输出为pdf文件
 		if (m_excel.OpenFromTemplate(_T("E:\\pdf数据表_wq.xlsx")))
 		{
-			CreateTestData();
-			memcpy(&m_comm.m_newRollData, &rollSchedu, sizeof(PDF::ROLLSchedule));
+// 			CreateTestData();
+// 			memcpy(&m_comm.m_newRollData, &rollSchedu, sizeof(PDF::ROLLSchedule));
 			SetRollingData();
 			CString fileName;//文件保存路径
 			fileName.Format(_T("E:\\%s.pdf"),m_comm.m_newRollData.pdiData.slabID);
